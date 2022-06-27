@@ -2,29 +2,47 @@ import React from 'react';
 import ReactDOM from 'react-dom'
 import './index.css'
 
-class Square extends React.Component {
+// class Square extends React.Component {
+//     render() {
+//         return (
+//             <button 
+//             className="square"
+//             onClick={() => this.props.onClick()}
+//             >
+//             {this.props.value}
+//             </button>
+//         );
+//         }
+// }
+
+function Square(props) {
+    return (
+        <button className='square' onClick={props.onClick}>
+            {props.value}
+        </button>
+    )
+}
+
+class Board extends React.Component {
     constructor(props) {
         super(props); // 하위 클래스의 생성자를 작성할 때 항상 super(props)를 작성해 주어야 함
         this.state = {
-            value : null,
+            squares : Array(9).fill(null),
         }
     }
 
-    render() {
-        return (
-            <button 
-            className="square"
-            onClick={() => this.setState({value : 'X'})}
-            >
-            {this.state.value}
-            </button>
-        );
-        }
-}
-class Board extends React.Component {
+    handleClick(i) {
+        const squares = this.state.squares.slice(); // slice()를 통해 배열의 사본 작성
+        squares[i] = 'X';
+        this.setState({squares : squares});
+    }
+
     renderSquare(i) {
-        return <Square value={i}/>;
-        }
+        return <Square 
+            value={this.state.squares[i]}
+            onClick={() => this.handleClick(i)}
+        />;
+    }
         
     render() {
         const status = 'Next player: X';
