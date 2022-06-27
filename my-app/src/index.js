@@ -3,17 +3,27 @@ import ReactDOM from 'react-dom'
 import './index.css'
 
 class Square extends React.Component {
+    constructor(props) {
+        super(props); // 하위 클래스의 생성자를 작성할 때 항상 super(props)를 작성해 주어야 함
+        this.state = {
+            value : null,
+        }
+    }
+
     render() {
         return (
-            <button className="square">
-            {/* TODO */}
+            <button 
+            className="square"
+            onClick={() => this.setState({value : 'X'})}
+            >
+            {this.state.value}
             </button>
         );
         }
 }
 class Board extends React.Component {
     renderSquare(i) {
-        return <Square />;
+        return <Square value={i}/>;
         }
         
     render() {
